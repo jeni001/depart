@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/AppCommon.dart';
 import 'package:flutter_application_1/classes/department.dart';
+import 'package:flutter_application_1/jobworkpage.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
@@ -35,7 +36,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController dn = TextEditingController();
   List<String> lstDN = <String>[];
-  List<Dment> lstDept = [];
+  List<Department> lstDept = [];
   int deptId = 0;
 
   @override
@@ -57,8 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
       return;
     } else {
       var parsedDept = data["Data"].cast<Map<String, dynamic>>();
-      List<Dment> _LstDept =
-          parsedDept.map<Dment>((json) => Dment.fromJson(json)).toList();
+      List<Department> _LstDept = parsedDept
+          .map<Department>((json) => Department.fromJson(json))
+          .toList();
 
       setState(() {
         lstDept = _LstDept;
@@ -80,8 +82,9 @@ class _MyHomePageState extends State<MyHomePage> {
       return;
     }
     var parsedDept = data["Data"].cast<Map<String, dynamic>>();
-    List<Dment> _LstDept =
-        parsedDept.map<Dment>((json) => Dment.fromJson(json)).toList();
+    List<Department> _LstDept = parsedDept
+        .map<Department>((json) => Department.fromJson(json))
+        .toList();
 
     setState(() {
       lstDept = _LstDept;
@@ -105,8 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     var parsedDept = data["Data"].cast<Map<String, dynamic>>();
-    List<Dment> _LstDept =
-        parsedDept.map<Dment>((json) => Dment.fromJson(json)).toList();
+    List<Department> _LstDept = parsedDept
+        .map<Department>((json) => Department.fromJson(json))
+        .toList();
 
     setState(() {
       deptId = 0;
@@ -226,6 +230,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             }),
                       );
                     }),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => Job_Work()));
+                },
+                child: Text('JW'),
               )
             ],
           ),

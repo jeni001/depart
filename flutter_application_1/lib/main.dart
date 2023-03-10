@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void AddDN() async {
+  void SaveDN() async {
     String encodedURl = AppCommon.hostname +
         "/DataLoad/SaveDepartment?DeptID=" +
         deptId.toString() +
@@ -128,6 +128,18 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text("Department"),
           backgroundColor: Color.fromARGB(255, 62, 90, 81),
+          actions: [
+            IconButton(
+                icon: Icon(
+                  Icons.refresh,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  LoadDeptList();
+                  dn.clear();
+                  FocusScope.of(context).unfocus();
+                }),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.only(left: 13.0, right: 13.0, top: 8.0),
@@ -143,42 +155,46 @@ class _MyHomePageState extends State<MyHomePage> {
               //               borderRadius:
               //                   BorderRadius.all(Radius.circular(5.0))))),
               // ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                    controller: dn,
-                    decoration: InputDecoration(
-                        focusColor: Color.fromARGB(255, 62, 90, 81),
-                        hintText: "Department Name",
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0))))),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Expanded(
+                    flex: 2,
+                    child: TextFormField(
+                        controller: dn,
+                        decoration: InputDecoration(
+                            focusColor: Color.fromARGB(255, 62, 90, 81),
+                            hintText: "Department Name",
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5.0))))),
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                         onPressed: () {
-                          if (dn.text != null) return AddDN();
+                          if (dn.text != null) return SaveDN();
                         },
-                        child: Text(deptId > 0 ? "Update" : "Add")),
+                        child: Text(deptId > 0 ? "Update" : "Save")),
                   ),
-                  if (deptId > 0)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            deptId = 0;
-                            dn.clear();
-                          });
-                        },
-                        child: Text("Cancel"),
-                      ),
-                    )
+                  // if (deptId > 0)
+                  //   Padding(
+                  //     padding: const EdgeInsets.only(left: 8.0),
+                  //     child: ElevatedButton(
+                  //       onPressed: () {
+                  //         setState(() {
+                  //           deptId = 0;
+                  //           dn.clear();
+                  //         });
+                  //       },
+                  //       child: Text("Cancel"),
+                  //     ),
+                  //   )
                 ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text('You have ${lstDept.length} Items'),
               ),
               Expanded(
                 child: ListView.builder(
